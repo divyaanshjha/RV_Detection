@@ -14,6 +14,7 @@ build/
 
 # Data & Outputs
 data/
+retfound_weights/
 outputs/
 *.pth
 *.ckpt

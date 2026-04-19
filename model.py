@@ -70,7 +70,7 @@ def _load_retfound() -> tuple[nn.Module, int]:
     """
     import timm
 
-    RETFOUND_WEIGHTS = "retfound_weights/RETFound_cfp_weights.pth"
+    RETFOUND_WEIGHTS = "retfound_weights/RETFound_mae_natureCFP.pth"
 
     try:
         import os
@@ -86,8 +86,11 @@ def _load_retfound() -> tuple[nn.Module, int]:
         )
 
         state = torch.load(RETFOUND_WEIGHTS, map_location="cpu")
-        # RETFound checkpoint stores weights under "model" key
+        # HuggingFace checkpoint may store directly or under "model" key
         weights = state.get("model", state)
+        # Also handle if it's stored under "state_dict"
+        if "state_dict" in state:
+            weights = state["state_dict"]
         # Remove the classification head weights if present
         weights = {k: v for k, v in weights.items()
                    if not k.startswith("head.")}

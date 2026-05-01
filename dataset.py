@@ -22,23 +22,18 @@ from config import DATA, PHASES, IMAGE, AUGMENT
 # PHASE DETECTION
 # ──────────────────────────────────────────────────────────────
 
-def detect_phase(filename: str) -> int:
+def detect_phase(filepath: str) -> int:
     """
-    Infer the FA phase from the image filename.
-    Returns an integer index defined in config.PHASES.
-
-    Examples:
-        "C167_EARLY_PHASE_OS_.png"  → 0  (EARLY)
-        "C167_MID_PHASE_OS_.png"    → 1  (MID)
-        "C167_LATE_PHASE_OS_.png"   → 2  (LATE)
-        "C167_PERIPH_OS_.png"       → 3  (PERIPH)
-        "C167_IMG_01.png"           → 4  (UNKNOWN)
+    Check both the filename AND the full folder path for phase keywords.
+    Handles cases where phase is encoded in folder names, not filenames.
+    
+    e.g. C11/some_folder/EARLY/image1.png → detects EARLY from folder name
     """
-    name_upper = filename.upper()
+    path_upper = str(filepath).upper()
     for keyword, idx in PHASES.items():
         if keyword == "UNKNOWN":
             continue
-        if keyword in name_upper:
+        if keyword in path_upper:
             return idx
     return PHASES["UNKNOWN"]
 
@@ -130,7 +125,7 @@ def build_patient_records(rv_dir: str, normal_dir: str) -> list[dict]:
                     continue
                 if f.suffix.lower() not in VALID_EXTENSIONS:
                     continue
-                phase_idx = detect_phase(f.name)
+                phase_idx = detect_phase(str(f))   # pass full path, not just filename
                 images.append({
                     "path":  str(f),
                     "phase": phase_idx,

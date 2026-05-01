@@ -85,7 +85,7 @@ def _load_retfound() -> tuple[nn.Module, int]:
             global_pool="avg",
         )
 
-        state = torch.load(RETFOUND_WEIGHTS, map_location="cpu")
+        state = torch.load(RETFOUND_WEIGHTS, map_location="cpu", weights_only=False)
         # HuggingFace checkpoint may store directly or under "model" key
         weights = state.get("model", state)
         # Also handle if it's stored under "state_dict"

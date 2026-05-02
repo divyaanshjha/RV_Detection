@@ -50,7 +50,7 @@ IMAGE = {
 # MODEL
 # ──────────────────────────────────────────────
 MODEL = {
-    "backbone":         "retfound",   # "retfound" | "vit_base" | "efficientnet_b3"
+    "backbone":         "efficientnet_b3",   # "retfound" | "vit_base" | "efficientnet_b3"
     "feature_dim":      1024,         # RETFound ViT-Large output dim
     "phase_embed_dim":  32,           # learned phase embedding size
     "combined_dim":     1056,         # feature_dim + phase_embed_dim

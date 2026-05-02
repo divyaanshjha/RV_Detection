@@ -29,6 +29,7 @@ data/
 ## Setup
 
 ```bash
+source myenv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -72,10 +73,12 @@ with a small subset. Full training needs a GPU (Colab/Kaggle).
 
 **Tip for testing locally (no GPU):**
 Temporarily set in config.py:
+
 ```python
 TRAIN["phaseA_epochs"] = 1
 TRAIN["phaseB_epochs"] = 1
 ```
+
 And copy 4-5 patients per class into your data folders to verify
 the pipeline runs without errors before moving to Colab.
 
@@ -94,14 +97,14 @@ telling you which FA phase the model found most diagnostic.
 
 ## Files
 
-| File | Purpose |
-|------|---------|
-| `config.py` | All hyperparameters — edit here, not elsewhere |
-| `dataset.py` | Parses folders, tags phases, builds MIL bags |
-| `model.py` | RETFound backbone + attention MIL + classifier |
-| `train.py` | 5-fold CV training loop with Phase A + Phase B |
-| `predict.py` | Inference on new/existing patients |
-| `requirements.txt` | Python dependencies |
+| File               | Purpose                                        |
+| ------------------ | ---------------------------------------------- |
+| `config.py`        | All hyperparameters — edit here, not elsewhere |
+| `dataset.py`       | Parses folders, tags phases, builds MIL bags   |
+| `model.py`         | RETFound backbone + attention MIL + classifier |
+| `train.py`         | 5-fold CV training loop with Phase A + Phase B |
+| `predict.py`       | Inference on new/existing patients             |
+| `requirements.txt` | Python dependencies                            |
 
 ---
 
